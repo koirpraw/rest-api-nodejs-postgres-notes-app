@@ -1,0 +1,8 @@
+#env variables
+.env
+# vscode extensions config
+/.vscode
+# node_modules
+/node_modules
+
+blogPost.md
