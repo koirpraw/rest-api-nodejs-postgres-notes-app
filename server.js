@@ -9,7 +9,7 @@ const corsOptions = {
     optionsSuccessStatus: 200
 }
 
-const PORT = process.env.PORT || 4001;
+const PORT = process.env.PORT || 4000;
 
 const noteRoutes = require('./src/route/notes')
 
@@ -20,7 +20,7 @@ app.use(cors(corsOptions));
 app.use('/api/notes', noteRoutes);
 
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome notes app with postGreSQL." });
+    res.json({ message: "Welcome to notes app with postGreSQL." });
 })
 
 app.listen(PORT, () => {

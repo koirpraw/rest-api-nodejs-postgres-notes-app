@@ -1,4 +1,5 @@
 # REST API with Node.js, Express.js and PostGreSQL(Driver: pg)
+[![Details Visit My Blog](https://img.shields.io/badge/Details-%20BlogArticle-blue)](https://codeandcurious.com/how-to-build-a-rest-api-with-nodejs-and-postgresdriver/)
 
 ## Description
 This is a simple REST API that allows you to perform CRUD operations on a PostGreSQL database. The API is built with Node.js, Express.js and PostGreSQL. The driver used to connect to the PostGreSQL database is pg. 
@@ -42,3 +43,7 @@ There are 6 routes in the API:
 - dotenv
 - nodemon
 - cors
+
+
+[![CodeAndCurious.com](https://img.shields.io/badge/Blog:%20CodeAndCurious.com-8A2BE2)](https://codeandcurious.com/)
+
