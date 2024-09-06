@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router()
 const notesController = require('../controller/noteController');
 
 router.post('/', notesController.createNote);
@@ -15,5 +15,6 @@ router.delete('/:id', notesController.deleteNoteById);
 router.delete('/', notesController.deleteAll);
 
 
-
 module.exports = router;
+
+
