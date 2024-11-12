@@ -12,13 +12,16 @@ const corsOptions = {
 
 const PORT = process.env.PORT || 4000;
 
-const noteRoutes = require('./src/route/notes')
+const noteRoutes = require('./src/route/noteRoute')
+const authRoute = require('./src/route/authRoute')
 
 app.use(express.json());
 
 app.use(cors(corsOptions));
 
 app.use('/api/notes', noteRoutes);
+
+app.use('/api/auth', authRoute);
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to notes app with postGreSQL." });
