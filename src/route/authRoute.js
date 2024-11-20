@@ -5,10 +5,10 @@ const authController = require('../controller/authController')
 
 
 // register route
-router.post('/register', authController.register)
+router.post('/auth/register', authController.register)
 
 // login route
-router.post('/login', authController.login)
+router.post('/auth/login', authController.login)
 
 
 // logout route

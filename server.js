@@ -19,9 +19,9 @@ app.use(express.json());
 
 app.use(cors(corsOptions));
 
-app.use('/api/notes', noteRoutes);
+app.use('/api', noteRoutes);
 
-app.use('/api/auth', authRoute);
+app.use('/api', authRoute);
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to notes app with postGreSQL." });

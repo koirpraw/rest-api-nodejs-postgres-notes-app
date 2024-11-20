@@ -3,57 +3,54 @@ const router = express.Router()
 const notesController = require('../controller/noteController');
 
 const { authenticateToken, authorizeRoles, verifyNoteOwnerShip } = require('../middleware/authMiddleware');
+const { validateApiKey } = require('../middleware/apiKeyMiddleWare');
+// Admin created note for public access.
+router.get('/public/notes', validateApiKey, notesController.getAdminNotes)
 
+// router.use(authenticateToken)
 
+// access users own notes only
+router.get('/notes', authenticateToken, notesController.getUserNotes);
+
+router.get('/notes/:id', authenticateToken, verifyNoteOwnerShip('view'), notesController.getUserNoteByid)
+
+router.post('/notes', authenticateToken, notesController.createNote);
+
+router.put('/notes/:id', authenticateToken, verifyNoteOwnerShip('modify'), notesController.updateNoteById)
+
+router.delete('/notes/:id', authenticateToken, verifyNoteOwnerShip('delete'), notesController.deleteNoteById);
 
 // admin and moderator only access routes
-router.get('/admin',
+router.get('/admin/notes',
     authenticateToken,
     authorizeRoles('admin', 'moderator'),
     notesController.getAllNotes);
 
-router.get('/admin/:id',
+router.get('/admin/notes/:id',
     authenticateToken,
     authorizeRoles('admin', 'moderator'),
     notesController.getNoteById);
 
-// access users own notes only
-router.get('/user-notes', authenticateToken, notesController.getUserNotes);
 
-router.get('/user-notes/:id', authenticateToken, notesController.getUserNoteByid)
 
-// Protected routes
-router.post('/',
+// create route for all admin, moderatpr and user
+router.post('/admin/notes',
     authenticateToken,
-    // authorizeRoles('admin', 'moderator'),
+    authorizeRoles('admin', 'moderator'),
     notesController.createNote);
 
-router.put('/user-notes/:id',
+// update route for all admin, moderator and user
+router.put('/admin/notes/:id',
     authenticateToken,
-    verifyNoteOwnerShip('modify'),
-    // async (req, res, next) => {
-    //     const note = await findById(req.params.id);
-    //     if (note.rows[0].user_id === req.user.userId || req.user.role === 'admin') {
-    //         next();
-    //     } else {
-    //         res.status(403).json({ message: 'Not authorized to modify this note' })
-    //     }
-    // },
+    authorizeRoles('admin', 'moderator'),
     notesController.updateNoteById
 
 )
 
-router.delete('/user-notes/:id',
+// update route for all admin, moderator and user
+router.delete('/admin/notes/:id',
     authenticateToken,
-    verifyNoteOwnerShip('delete'),
-    // async (req, res, next) => {
-    //     const note = await findById(req.params.id);
-    //     if (note.rows[0].user_id === req.user.userId || req.user.role === 'admin') {
-    //         next()
-    //     } else {
-    //         res.status(403).json({ message: `Not authorized to delete this note. Your role is :${req.user.role} ` });
-    //     }
-    // },
+    authorizeRoles('admin', 'moderator'),
     notesController.deleteNoteById
 )
 
