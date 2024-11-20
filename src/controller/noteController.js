@@ -15,7 +15,9 @@ exports.createNote = async (req, res) => {
             difficulty: 1,
             created_at: createdAtStamp
         }
-        const note = await Note.create(newNote)
+
+        const userId = req.user.userId;
+        const note = await Note.create(newNote, userId)
 
 
         res.status(201).json(note.rows);
@@ -39,17 +41,59 @@ exports.getAllNotes = async (req, res) => {
 
 }
 
+exports.getUserNotes = async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const notes = await Note.findUserNotes(userId)
+        res.status(200).json(notes.rows)
+    } catch (error) {
+        res.status(500).send({ message: 'Error fetching user notes', error: error.message });
+        throw error;
+
+    }
+}
+
+exports.getAdminNotes = async (req, res) => {
+    try {
+
+        const notes = await Note.findAdminNotes();
+        res.status(200).json(notes.rows)
+    } catch (error) {
+        res.status(500).send({ message: 'Error fetching admin notes', error: error.message });
+        throw error;
+
+    }
+}
+
+
+
 exports.getNoteById = async (req, res) => {
 
     try {
+
         const id = req.params.id;
-        const note = await Note.findById(id);
-        res.status(200).json(note.rows);
+        const note = await Note.findById(id)
+        res.status(200).json(note.rows[0]);
 
     } catch (error) {
         res.status(500).send({ message: 'Error fetching notes', error: error.message });
         throw (error)
     }
+}
+
+exports.getUserNoteByid = async (req, res) => {
+
+    try {
+        const userId = req.user.userId;
+        const id = req.params.id;
+        const note = await Note.findUserNoteById(id, userId);
+        res.status(200).json(note.rows[0])
+
+    } catch (error) {
+        res.status(500).send({ message: `Error fetching users Not by Id` })
+
+    }
+
 }
 
 exports.updateNoteById = async (req, res) => {
@@ -83,7 +127,7 @@ exports.deleteNoteById = async (req, res) => {
         const id = req.params.id;
         const note = await Note.remove(id);
         const notes = await Note.findAll()
-        res.status(200).json(notes.rows.map(note => note.title));
+        res.status(200).json(notes.rows);
 
     } catch (error) {
         res.status(500).send({ message: 'Error deleting note', error: error.message });

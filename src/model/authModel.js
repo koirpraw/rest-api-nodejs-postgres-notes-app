@@ -46,6 +46,16 @@ const findUserByEmail = async (email) => {
     }
 };
 
+// const invalidateToken = async (refreshToken) =>{
+//     try {
+//         const result = 
+
+//     } catch (error) {
+//         console.log('error invalidating token',error)
+
+//     }
+// }
+
 module.exports = {
     createNewUser,
     findUserByEmail
