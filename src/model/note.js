@@ -54,7 +54,7 @@ SELECT * FROM ${tableName} WHERE user_id = $1;
         throw error;
     }
 }
-
+// alternatively in future can do public and premium content separate ,created by admin
 const findAdminNotes = async () => {
     const findAdminNotesQuery = `
 SELECT * FROM ${tableName} WHERE user_id IN
