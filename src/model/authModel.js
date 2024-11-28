@@ -12,17 +12,16 @@ const createTableQuery = `
     );
 `;
 
-const createUserQuery = `
+
+
+
+
+const createNewUser = async (userData) => {
+    const createUserQuery = `
     INSERT INTO ${tableName} (email, password, role)
     VALUES ($1, $2, $3)
     RETURNING id, email, role;
 `;
-
-const findUserByEmailQuery = `
-    SELECT * FROM ${tableName} WHERE email = $1;
-`;
-
-const createNewUser = async (userData) => {
     try {
         await db.query(createTableQuery);
         const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -38,6 +37,9 @@ const createNewUser = async (userData) => {
 };
 
 const findUserByEmail = async (email) => {
+    const findUserByEmailQuery = `
+    SELECT * FROM ${tableName} WHERE email = $1;
+`;
     try {
         const result = await db.query(findUserByEmailQuery, [email]);
         return result.rows[0];
