@@ -1,6 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 const context = ({ req }) => {
     const token = req.headers.authorization?.split(' ')[1];

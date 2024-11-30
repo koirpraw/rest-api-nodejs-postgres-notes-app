@@ -1,5 +1,6 @@
 // import gql from 'graphql-tag';
-const gql = require('graphql-tag')
+const { gql } = require('apollo-server-express')
+
 
 const typeDefs = gql`
 # scalar DateTime
@@ -41,4 +42,4 @@ input NoteInput {
 }
 `;
 
-exports.module = typeDefs;
+module.exports = typeDefs;
